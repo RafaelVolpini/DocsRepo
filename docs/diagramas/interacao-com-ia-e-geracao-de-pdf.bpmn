@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_MatterDocs" name="MatterDocs" processRef="Process_MatterDocs" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_MatterDocs" name="Interação com IA e geração de PDF" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_MatterDocs">
+      <bpmn:lane id="Lane_UsuarioInterno" name="Usuário interno">
+        <bpmn:flowNodeRef>Start_Solicitacao</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_IniciarChat</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_EnviarSolicitacao</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RecuperarMemoria</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_GerarArtefato</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SalvarArtefato</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RevisarArtefatos</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SelecionarPDF</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_GerarPDF</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BaixarPDF</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Processo</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Solicitacao" name="Necessidade de documentação identificada">
+      <bpmn:outgoing>F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_IniciarChat" name="Iniciar chat ou retomar conversa">
+      <bpmn:incoming>F1</bpmn:incoming>
+      <bpmn:outgoing>F2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_EnviarSolicitacao" name="Informar solicitação de documentação">
+      <bpmn:incoming>F2</bpmn:incoming>
+      <bpmn:outgoing>F3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_RecuperarMemoria" name="Recuperar contexto do chat">
+      <bpmn:incoming>F3</bpmn:incoming>
+      <bpmn:outgoing>F4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_GerarArtefato" name="Gerar artefato de documentação com IA">
+      <bpmn:incoming>F4</bpmn:incoming>
+      <bpmn:outgoing>F5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_SalvarArtefato" name="Salvar artefato no projeto">
+      <bpmn:incoming>F5</bpmn:incoming>
+      <bpmn:outgoing>F6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_RevisarArtefatos" name="Revisar artefatos gerados">
+      <bpmn:incoming>F6</bpmn:incoming>
+      <bpmn:outgoing>F7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_SelecionarPDF" name="Selecionar artefatos e definir ordem do PDF">
+      <bpmn:incoming>F7</bpmn:incoming>
+      <bpmn:outgoing>F8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_GerarPDF" name="Montar PDF com artefatos selecionados">
+      <bpmn:incoming>F8</bpmn:incoming>
+      <bpmn:outgoing>F9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_BaixarPDF" name="Baixar PDF">
+      <bpmn:incoming>F9</bpmn:incoming>
+      <bpmn:outgoing>F10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Processo" name="Documentação gerada e PDF obtido">
+      <bpmn:incoming>F10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F1" sourceRef="Start_Solicitacao" targetRef="Task_IniciarChat" />
+    <bpmn:sequenceFlow id="F2" sourceRef="Task_IniciarChat" targetRef="Task_EnviarSolicitacao" />
+    <bpmn:sequenceFlow id="F3" sourceRef="Task_EnviarSolicitacao" targetRef="Task_RecuperarMemoria" />
+    <bpmn:sequenceFlow id="F4" sourceRef="Task_RecuperarMemoria" targetRef="Task_GerarArtefato" />
+    <bpmn:sequenceFlow id="F5" sourceRef="Task_GerarArtefato" targetRef="Task_SalvarArtefato" />
+    <bpmn:sequenceFlow id="F6" sourceRef="Task_SalvarArtefato" targetRef="Task_RevisarArtefatos" />
+    <bpmn:sequenceFlow id="F7" sourceRef="Task_RevisarArtefatos" targetRef="Task_SelecionarPDF" />
+    <bpmn:sequenceFlow id="F8" sourceRef="Task_SelecionarPDF" targetRef="Task_GerarPDF" />
+    <bpmn:sequenceFlow id="F9" sourceRef="Task_GerarPDF" targetRef="Task_BaixarPDF" />
+    <bpmn:sequenceFlow id="F10" sourceRef="Task_BaixarPDF" targetRef="End_Processo" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_MatterDocs_di" bpmnElement="Participant_MatterDocs" isHorizontal="true">
+        <dc:Bounds x="30" y="30" width="1990" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_UsuarioInterno_di" bpmnElement="Lane_UsuarioInterno" isHorizontal="true">
+        <dc:Bounds x="60" y="30" width="1960" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Solicitacao_di" bpmnElement="Start_Solicitacao">
+        <dc:Bounds x="162" y="87" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_IniciarChat_di" bpmnElement="Task_IniciarChat">
+        <dc:Bounds x="300" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EnviarSolicitacao_di" bpmnElement="Task_EnviarSolicitacao">
+        <dc:Bounds x="470" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RecuperarMemoria_di" bpmnElement="Task_RecuperarMemoria">
+        <dc:Bounds x="640" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GerarArtefato_di" bpmnElement="Task_GerarArtefato">
+        <dc:Bounds x="810" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SalvarArtefato_di" bpmnElement="Task_SalvarArtefato">
+        <dc:Bounds x="980" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RevisarArtefatos_di" bpmnElement="Task_RevisarArtefatos">
+        <dc:Bounds x="1150" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SelecionarPDF_di" bpmnElement="Task_SelecionarPDF">
+        <dc:Bounds x="1320" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GerarPDF_di" bpmnElement="Task_GerarPDF">
+        <dc:Bounds x="1490" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_BaixarPDF_di" bpmnElement="Task_BaixarPDF">
+        <dc:Bounds x="1660" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Processo_di" bpmnElement="End_Processo">
+        <dc:Bounds x="1862" y="87" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F1_di" bpmnElement="F1">
+        <di:waypoint x="198" y="105" />
+        <di:waypoint x="300" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_di" bpmnElement="F2">
+        <di:waypoint x="400" y="105" />
+        <di:waypoint x="470" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F3_di" bpmnElement="F3">
+        <di:waypoint x="570" y="105" />
+        <di:waypoint x="640" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F4_di" bpmnElement="F4">
+        <di:waypoint x="740" y="105" />
+        <di:waypoint x="810" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F5_di" bpmnElement="F5">
+        <di:waypoint x="910" y="105" />
+        <di:waypoint x="980" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F6_di" bpmnElement="F6">
+        <di:waypoint x="1080" y="105" />
+        <di:waypoint x="1150" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F7_di" bpmnElement="F7">
+        <di:waypoint x="1250" y="105" />
+        <di:waypoint x="1320" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F8_di" bpmnElement="F8">
+        <di:waypoint x="1420" y="105" />
+        <di:waypoint x="1490" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F9_di" bpmnElement="F9">
+        <di:waypoint x="1590" y="105" />
+        <di:waypoint x="1660" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F10_di" bpmnElement="F10">
+        <di:waypoint x="1760" y="105" />
+        <di:waypoint x="1862" y="105" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

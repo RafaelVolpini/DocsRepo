@@ -1,0 +1,70 @@
+classDiagram
+    class Solicitante {
+        +String id
+        +String nome
+        +String email
+        +registrarChamado()
+    }
+    class Chamado {
+        +String id
+        +String titulo
+        +String descricao
+        +String status
+        +DateTime dataAbertura
+        +DateTime dataEncerramento
+        +registrar()
+        +escalar(nivel)
+        +encerrar()
+    }
+    class Atendimento {
+        +String id
+        +String nivelAtendimento
+        +String diagnostico
+        +String solucao
+        +DateTime dataInicio
+        +DateTime dataFim
+        +analisarChamado()
+        +registrarSolucao()
+    }
+    class Tecnico {
+        +String id
+        +String nome
+        +analisarChamado()
+        +registrarAtendimento()
+    }
+    class TecnicoN1 {
+        +realizarTriagem()
+        +resolverChamado()
+        +escalarParaN2()
+    }
+    class TecnicoN2 {
+        +investigarChamado()
+        +resolverChamado()
+        +escalarParaN3()
+    }
+    class TecnicoN3 {
+        +realizarAnaliseAvancada()
+        +resolverChamado()
+        +escalarParaGestor()
+    }
+    class Gestor {
+        +String id
+        +String nome
+        +avaliarChamadoEscalado()
+        +registrarDecisao()
+    }
+    class DecisaoGestor {
+        +String id
+        +String descricao
+        +DateTime dataDecisao
+        +registrarOrientacao()
+    }
+    Solicitante "1" --> "0..*" Chamado : abre
+    Chamado "1" *-- "1..*" Atendimento : possui historico
+    Tecnico "1" --> "0..*" Atendimento : executa
+    Tecnico <|-- TecnicoN1
+    Tecnico <|-- TecnicoN2
+    Tecnico <|-- TecnicoN3
+    Chamado "1" --> "0..1" DecisaoGestor : recebe
+    Gestor "1" --> "0..*" DecisaoGestor : registra
+    DecisaoGestor "1" --> "1" Atendimento : orienta

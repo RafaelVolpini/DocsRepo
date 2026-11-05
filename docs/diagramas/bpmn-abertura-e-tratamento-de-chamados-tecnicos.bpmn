@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_1" name="Abertura e tratamento de chamados técnicos" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" name="Abertura e tratamento de chamados técnicos" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Solicitante" name="Solicitante">
+        <bpmn:flowNodeRef>Start_Chamado</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Registrar</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_N1" name="N1">
+        <bpmn:flowNodeRef>Task_Analisar_N1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Resolvido_N1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Encerrar_N1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_N1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_N2" name="N2">
+        <bpmn:flowNodeRef>Task_Analisar_N2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Resolvido_N2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Encerrar_N2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_N2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_N3" name="N3">
+        <bpmn:flowNodeRef>Task_Analisar_N3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Resolvido_N3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Encerrar_N3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_N3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Gestor" name="Gestor">
+        <bpmn:flowNodeRef>Task_Atuar_Gestor</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Registrar_Excecao</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Gestor</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Chamado" name="Necessidade de suporte identificada">
+      <bpmn:outgoing>F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_Registrar" name="Registrar chamado">
+      <bpmn:incoming>F1</bpmn:incoming>
+      <bpmn:outgoing>F2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Analisar_N1" name="Analisar chamado no N1">
+      <bpmn:incoming>F2</bpmn:incoming>
+      <bpmn:outgoing>F3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Resolvido_N1" name="Chamado resolvido no N1?">
+      <bpmn:incoming>F3</bpmn:incoming>
+      <bpmn:outgoing>F4</bpmn:outgoing>
+      <bpmn:outgoing>F5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Encerrar_N1" name="Encerrar chamado">
+      <bpmn:incoming>F4</bpmn:incoming>
+      <bpmn:outgoing>F6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_N1" name="Chamado encerrado no N1">
+      <bpmn:incoming>F6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Analisar_N2" name="Analisar chamado no N2">
+      <bpmn:incoming>F5</bpmn:incoming>
+      <bpmn:outgoing>F7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Resolvido_N2" name="Chamado resolvido no N2?">
+      <bpmn:incoming>F7</bpmn:incoming>
+      <bpmn:outgoing>F8</bpmn:outgoing>
+      <bpmn:outgoing>F9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Encerrar_N2" name="Encerrar chamado">
+      <bpmn:incoming>F8</bpmn:incoming>
+      <bpmn:outgoing>F10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_N2" name="Chamado encerrado no N2">
+      <bpmn:incoming>F10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Analisar_N3" name="Analisar chamado no N3">
+      <bpmn:incoming>F9</bpmn:incoming>
+      <bpmn:outgoing>F11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Resolvido_N3" name="Chamado resolvido no N3?">
+      <bpmn:incoming>F11</bpmn:incoming>
+      <bpmn:outgoing>F12</bpmn:outgoing>
+      <bpmn:outgoing>F13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Encerrar_N3" name="Encerrar chamado">
+      <bpmn:incoming>F12</bpmn:incoming>
+      <bpmn:outgoing>F14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_N3" name="Chamado encerrado no N3">
+      <bpmn:incoming>F14</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Atuar_Gestor" name="Avaliar chamado escalado">
+      <bpmn:incoming>F13</bpmn:incoming>
+      <bpmn:outgoing>F15</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Registrar_Excecao" name="Registrar decisão e orientar tratamento">
+      <bpmn:incoming>F15</bpmn:incoming>
+      <bpmn:outgoing>F16</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Gestor" name="Tratamento concluído pelo gestor">
+      <bpmn:incoming>F16</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F1" sourceRef="Start_Chamado" targetRef="Task_Registrar" />
+    <bpmn:sequenceFlow id="F2" sourceRef="Task_Registrar" targetRef="Task_Analisar_N1" />
+    <bpmn:sequenceFlow id="F3" sourceRef="Task_Analisar_N1" targetRef="Gateway_Resolvido_N1" />
+    <bpmn:sequenceFlow id="F4" name="Sim" sourceRef="Gateway_Resolvido_N1" targetRef="Task_Encerrar_N1" />
+    <bpmn:sequenceFlow id="F5" name="Não: escalar para N2" sourceRef="Gateway_Resolvido_N1" targetRef="Task_Analisar_N2" />
+    <bpmn:sequenceFlow id="F6" sourceRef="Task_Encerrar_N1" targetRef="End_N1" />
+    <bpmn:sequenceFlow id="F7" sourceRef="Task_Analisar_N2" targetRef="Gateway_Resolvido_N2" />
+    <bpmn:sequenceFlow id="F8" name="Sim" sourceRef="Gateway_Resolvido_N2" targetRef="Task_Encerrar_N2" />
+    <bpmn:sequenceFlow id="F9" name="Não: escalar para N3" sourceRef="Gateway_Resolvido_N2" targetRef="Task_Analisar_N3" />
+    <bpmn:sequenceFlow id="F10" sourceRef="Task_Encerrar_N2" targetRef="End_N2" />
+    <bpmn:sequenceFlow id="F11" sourceRef="Task_Analisar_N3" targetRef="Gateway_Resolvido_N3" />
+    <bpmn:sequenceFlow id="F12" name="Sim" sourceRef="Gateway_Resolvido_N3" targetRef="Task_Encerrar_N3" />
+    <bpmn:sequenceFlow id="F13" name="Não: escalar para gestor" sourceRef="Gateway_Resolvido_N3" targetRef="Task_Atuar_Gestor" />
+    <bpmn:sequenceFlow id="F14" sourceRef="Task_Encerrar_N3" targetRef="End_N3" />
+    <bpmn:sequenceFlow id="F15" sourceRef="Task_Atuar_Gestor" targetRef="Task_Registrar_Excecao" />
+    <bpmn:sequenceFlow id="F16" sourceRef="Task_Registrar_Excecao" targetRef="End_Gestor" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Start_Chamado_di" bpmnElement="Start_Chamado">
+        <dc:Bounds x="57" y="52" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Registrar_di" bpmnElement="Task_Registrar">
+        <dc:Bounds x="175" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Analisar_N1_di" bpmnElement="Task_Analisar_N1">
+        <dc:Bounds x="325" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Resolvido_N1_di" bpmnElement="Gateway_Resolvido_N1" isMarkerVisible="true">
+        <dc:Bounds x="500" y="45" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Encerrar_N1_di" bpmnElement="Task_Encerrar_N1">
+        <dc:Bounds x="625" y="30" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_N1_di" bpmnElement="End_N1">
+        <dc:Bounds x="807" y="52" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Analisar_N2_di" bpmnElement="Task_Analisar_N2">
+        <dc:Bounds x="625" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Resolvido_N2_di" bpmnElement="Gateway_Resolvido_N2" isMarkerVisible="true">
+        <dc:Bounds x="800" y="185" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Encerrar_N2_di" bpmnElement="Task_Encerrar_N2">
+        <dc:Bounds x="925" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_N2_di" bpmnElement="End_N2">
+        <dc:Bounds x="1107" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Analisar_N3_di" bpmnElement="Task_Analisar_N3">
+        <dc:Bounds x="925" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Resolvido_N3_di" bpmnElement="Gateway_Resolvido_N3" isMarkerVisible="true">
+        <dc:Bounds x="1100" y="325" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Encerrar_N3_di" bpmnElement="Task_Encerrar_N3">
+        <dc:Bounds x="1225" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_N3_di" bpmnElement="End_N3">
+        <dc:Bounds x="1407" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Atuar_Gestor_di" bpmnElement="Task_Atuar_Gestor">
+        <dc:Bounds x="1225" y="450" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Registrar_Excecao_di" bpmnElement="Task_Registrar_Excecao">
+        <dc:Bounds x="1375" y="450" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Gestor_di" bpmnElement="End_Gestor">
+        <dc:Bounds x="1557" y="472" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F1_di" bpmnElement="F1">
+        <di:waypoint x="93" y="70" />
+        <di:waypoint x="175" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_di" bpmnElement="F2">
+        <di:waypoint x="275" y="70" />
+        <di:waypoint x="325" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F3_di" bpmnElement="F3">
+        <di:waypoint x="425" y="70" />
+        <di:waypoint x="500" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F4_di" bpmnElement="F4">
+        <di:waypoint x="550" y="70" />
+        <di:waypoint x="625" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F5_di" bpmnElement="F5">
+        <di:waypoint x="525" y="95" />
+        <di:waypoint x="525" y="210" />
+        <di:waypoint x="625" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F6_di" bpmnElement="F6">
+        <di:waypoint x="725" y="70" />
+        <di:waypoint x="807" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F7_di" bpmnElement="F7">
+        <di:waypoint x="725" y="210" />
+        <di:waypoint x="800" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F8_di" bpmnElement="F8">
+        <di:waypoint x="850" y="210" />
+        <di:waypoint x="925" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F9_di" bpmnElement="F9">
+        <di:waypoint x="825" y="235" />
+        <di:waypoint x="825" y="350" />
+        <di:waypoint x="925" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F10_di" bpmnElement="F10">
+        <di:waypoint x="1025" y="210" />
+        <di:waypoint x="1107" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F11_di" bpmnElement="F11">
+        <di:waypoint x="1025" y="350" />
+        <di:waypoint x="1100" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F12_di" bpmnElement="F12">
+        <di:waypoint x="1150" y="350" />
+        <di:waypoint x="1225" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F13_di" bpmnElement="F13">
+        <di:waypoint x="1125" y="375" />
+        <di:waypoint x="1125" y="490" />
+        <di:waypoint x="1225" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14">
+        <di:waypoint x="1325" y="350" />
+        <di:waypoint x="1407" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F15_di" bpmnElement="F15">
+        <di:waypoint x="1325" y="490" />
+        <di:waypoint x="1375" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F16_di" bpmnElement="F16">
+        <di:waypoint x="1475" y="490" />
+        <di:waypoint x="1557" y="490" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

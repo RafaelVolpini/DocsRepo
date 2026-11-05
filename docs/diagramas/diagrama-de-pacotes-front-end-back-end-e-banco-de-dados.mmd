@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph Frontend["Pacote: Front-end"]
+        UI["Interface do usuário"]
+        APIClient["Cliente da API"]
+        UI --> APIClient
+    end
+
+    subgraph Backend["Pacote: Back-end"]
+        API["API"]
+        Rules["Regras de negócio"]
+        Repository["Acesso a dados"]
+        API --> Rules
+        Rules --> Repository
+    end
+
+    subgraph Database["Pacote: Banco de Dados"]
+        DB["Persistência de dados"]
+    end
+
+    APIClient -->|"Requisições HTTP"| API
+    Repository -->|"Consultas e gravações"| DB

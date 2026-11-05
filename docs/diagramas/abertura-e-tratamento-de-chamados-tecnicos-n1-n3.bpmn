@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:matter="http://matter.com.br/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_1" name="Atendimento de chamados técnicos" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" name="Abertura e tratamento de chamados técnicos" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Solicitante" name="Solicitante">
+        <bpmn:flowNodeRef>Start_Chamado</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Registrar</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_N1" name="N1">
+        <bpmn:flowNodeRef>Task_Analisar_N1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Resolvido_N1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Encerrar_N1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_N1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_N2" name="N2">
+        <bpmn:flowNodeRef>Task_Analisar_N2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Resolvido_N2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Encerrar_N2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_N2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_N3" name="N3">
+        <bpmn:flowNodeRef>Task_Analisar_N3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Resolvido_N3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Encerrar_N3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_N3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Gestor" name="Gestor">
+        <bpmn:flowNodeRef>Task_Atuar_Gestor</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Registrar_Excecao</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Gestor</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Chamado" name="Necessidade de suporte identificada">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_Registrar" name="Registrar chamado">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Analisar_N1" name="Analisar chamado no N1">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Resolvido_N1" name="Chamado resolvido no N1?" matter:labelSide="top">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Encerrar_N1" name="Encerrar chamado">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_N1" name="Chamado encerrado no N1">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Analisar_N2" name="Analisar chamado no N2">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Resolvido_N2" name="Chamado resolvido no N2?" matter:labelSide="top">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Encerrar_N2" name="Encerrar chamado">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_N2" name="Chamado encerrado no N2">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Analisar_N3" name="Analisar chamado no N3">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Resolvido_N3" name="Chamado resolvido no N3?">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_Encerrar_N3" name="Encerrar chamado">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_N3" name="Chamado encerrado no N3">
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_Atuar_Gestor" name="Avaliar chamado escalado">
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_15</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_Registrar_Excecao" name="Registrar decisão e orientar tratamento">
+      <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_Gestor" name="Tratamento concluído pelo gestor">
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Chamado" targetRef="Task_Registrar" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Registrar" targetRef="Task_Analisar_N1" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_Analisar_N1" targetRef="Gateway_Resolvido_N1" />
+    <bpmn:sequenceFlow id="Flow_4" name="Sim" sourceRef="Gateway_Resolvido_N1" targetRef="Task_Encerrar_N1" />
+    <bpmn:sequenceFlow id="Flow_5" name="Não — N2" sourceRef="Gateway_Resolvido_N1" targetRef="Task_Analisar_N2" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Encerrar_N1" targetRef="End_N1" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_Analisar_N2" targetRef="Gateway_Resolvido_N2" />
+    <bpmn:sequenceFlow id="Flow_8" name="Sim" sourceRef="Gateway_Resolvido_N2" targetRef="Task_Encerrar_N2" />
+    <bpmn:sequenceFlow id="Flow_9" name="Não — escalar N3" sourceRef="Gateway_Resolvido_N2" targetRef="Task_Analisar_N3" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Task_Encerrar_N2" targetRef="End_N2" />
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_Analisar_N3" targetRef="Gateway_Resolvido_N3" />
+    <bpmn:sequenceFlow id="Flow_12" name="Sim" sourceRef="Gateway_Resolvido_N3" targetRef="Task_Encerrar_N3" />
+    <bpmn:sequenceFlow id="Flow_13" name="Não: escalar para gestor" sourceRef="Gateway_Resolvido_N3" targetRef="Task_Atuar_Gestor" />
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Task_Encerrar_N3" targetRef="End_N3" />
+    <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Atuar_Gestor" targetRef="Task_Registrar_Excecao" />
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="Task_Registrar_Excecao" targetRef="End_Gestor" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds x="30" y="30" width="1990" height="750" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Solicitante_di" bpmnElement="Lane_Solicitante" isHorizontal="true">
+        <dc:Bounds x="60" y="30" width="1960" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_N1_di" bpmnElement="Lane_N1" isHorizontal="true">
+        <dc:Bounds x="60" y="180" width="1960" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_N2_di" bpmnElement="Lane_N2" isHorizontal="true">
+        <dc:Bounds x="60" y="330" width="1960" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_N3_di" bpmnElement="Lane_N3" isHorizontal="true">
+        <dc:Bounds x="60" y="480" width="1960" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Gestor_di" bpmnElement="Lane_Gestor" isHorizontal="true">
+        <dc:Bounds x="60" y="630" width="1960" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Chamado_di" bpmnElement="Start_Chamado">
+        <dc:Bounds x="162" y="87" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Registrar_di" bpmnElement="Task_Registrar">
+        <dc:Bounds x="300" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Analisar_N1_di" bpmnElement="Task_Analisar_N1">
+        <dc:Bounds x="470" y="215" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Resolvido_N1_di" bpmnElement="Gateway_Resolvido_N1" isMarkerVisible="true">
+        <dc:Bounds x="665" y="230" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="648" y="186" width="84" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Encerrar_N1_di" bpmnElement="Task_Encerrar_N1">
+        <dc:Bounds x="810" y="215" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_N1_di" bpmnElement="End_N1">
+        <dc:Bounds x="1012" y="237" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Analisar_N2_di" bpmnElement="Task_Analisar_N2">
+        <dc:Bounds x="810" y="365" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Resolvido_N2_di" bpmnElement="Gateway_Resolvido_N2" isMarkerVisible="true">
+        <dc:Bounds x="1005" y="380" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="988" y="336" width="84" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Encerrar_N2_di" bpmnElement="Task_Encerrar_N2">
+        <dc:Bounds x="1150" y="365" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_N2_di" bpmnElement="End_N2">
+        <dc:Bounds x="1352" y="387" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Analisar_N3_di" bpmnElement="Task_Analisar_N3">
+        <dc:Bounds x="1150" y="515" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Resolvido_N3_di" bpmnElement="Gateway_Resolvido_N3" isMarkerVisible="true">
+        <dc:Bounds x="1345" y="530" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Encerrar_N3_di" bpmnElement="Task_Encerrar_N3">
+        <dc:Bounds x="1490" y="515" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_N3_di" bpmnElement="End_N3">
+        <dc:Bounds x="1692" y="537" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Atuar_Gestor_di" bpmnElement="Task_Atuar_Gestor">
+        <dc:Bounds x="1490" y="665" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Registrar_Excecao_di" bpmnElement="Task_Registrar_Excecao">
+        <dc:Bounds x="1660" y="665" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Gestor_di" bpmnElement="End_Gestor">
+        <dc:Bounds x="1862" y="687" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="198" y="105" />
+        <di:waypoint x="300" y="105" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="400" y="105" />
+        <di:waypoint x="435" y="105" />
+        <di:waypoint x="435" y="255" />
+        <di:waypoint x="470" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="570" y="255" />
+        <di:waypoint x="665" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="715" y="255" />
+        <di:waypoint x="810" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="690" y="280" />
+        <di:waypoint x="690" y="405" />
+        <di:waypoint x="810" y="405" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="910" y="255" />
+        <di:waypoint x="1012" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="910" y="405" />
+        <di:waypoint x="1005" y="405" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="1055" y="405" />
+        <di:waypoint x="1150" y="405" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="1030" y="430" />
+        <di:waypoint x="1030" y="555" />
+        <di:waypoint x="1150" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="1250" y="405" />
+        <di:waypoint x="1352" y="405" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="1250" y="555" />
+        <di:waypoint x="1345" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="1395" y="555" />
+        <di:waypoint x="1490" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13">
+        <di:waypoint x="1370" y="580" />
+        <di:waypoint x="1370" y="705" />
+        <di:waypoint x="1490" y="705" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14_di" bpmnElement="Flow_14">
+        <di:waypoint x="1590" y="555" />
+        <di:waypoint x="1692" y="555" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15_di" bpmnElement="Flow_15">
+        <di:waypoint x="1590" y="705" />
+        <di:waypoint x="1660" y="705" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16_di" bpmnElement="Flow_16">
+        <di:waypoint x="1760" y="705" />
+        <di:waypoint x="1862" y="705" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
